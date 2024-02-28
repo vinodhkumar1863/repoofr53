@@ -288,36 +288,6 @@ route53_resolver.create_resolver_endpoint(CreatorRequestId='27-02-2024',
 
 
 
-# Create the Route53 resolver inbound endpoint for the first private subnet
-response_subnet1 = route53.create_resolver_rule(
-    CreatorRequestId='subnet1-resolver-inbound',
-    DomainName='cloud.com', 
-    RuleType='FORWARD',
-    Name='subnet1-resolver-inbound',
-    TargetIps=[
-        {
-            'Ip': 'ip-address-of-destination',  # Replace with the actual IP address
-            'Port': 53
-        }
-    ],
-    ResolverEndpointId='resolver-endpoint-id-of-subnet1'
-)
-
-# Create the Route53 resolver inbound endpoint for the second private subnet
-response_subnet2 = route53.create_resolver_rule(
-    CreatorRequestId='subnet2-resolver-inbound',
-    DomainName='cloud.com',  
-    RuleType='FORWARD',
-    Name='subnet2-resolver-inbound',
-    TargetIps=[
-        {
-            'Ip': 'ip-address-of-destination',  # Replace with the actual IP address
-            'Port': 53
-        }
-    ],
-    ResolverEndpointId='resolver-endpoint-id-of-subnet2'
-)
-
 
 # Create the security group for the Route53 resolver outbound endpoint
 resolver_outbound_sg = ec2.create_security_group(
@@ -368,19 +338,9 @@ route53_resolver.create_resolver_endpoint(CreatorRequestId='27-02-2024',
                                                            },
                                                        ], )
 
-
-
-
-
-
-
-
-
-
-
 response_outbound_subnet1 = route53.create_resolver_rule(
     CreatorRequestId='subnet1-resolver-outbound',
-    DomainName='cloud.com',  
+    DomainName='onprem.com',  
     RuleType='FORWARD',
     Name='subnet1-resolver-outbound',
     TargetIps=[
@@ -395,7 +355,7 @@ response_outbound_subnet1 = route53.create_resolver_rule(
 # Create the Route53 resolver outbound endpoint for the second private subnet
 response_outbound_subnet2 = route53.create_resolver_rule(
     CreatorRequestId='subnet2-resolver-outbound',
-    DomainName='cloud.com',  
+    DomainName='onprem.com',  
     RuleType='FORWARD',
     Name='subnet2-resolver-outbound',
     TargetIps=[
